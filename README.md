@@ -4,7 +4,7 @@
 
 # 主要修改：
 
-## deconfigs
+## jdcloud_ipq60xx_libwrt.config
 - 仅编译 jdcloud_re-cs-02，其它目标设备全部注释
 - 取消AdGuard Home、自动重启、CUPSD、Docker UI、MosDNS、Samba4、SmartDNS、VLMCSD 和 Passwall的编译
 - AX6600启用 zram-swap（原来是可选），新增luci-app-openclash
