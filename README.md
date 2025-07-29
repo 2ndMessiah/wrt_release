@@ -16,7 +16,7 @@
 ## release_wrt.yml
 - 默认编译jdcloud_ipq60xx_libwrt
 
-## ./patch
+## ./patches
 - 替换万吉为lucky。
 
 
