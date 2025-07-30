@@ -962,6 +962,29 @@ remove_tweaked_packages() {
     fi
 }
 
+fix_gettext_compile_error() {
+    local patch_src="$BASE_PATH/patches/300-gettext-tools-define-bison-localedir.patch"
+    local gettext_path="$BUILD_DIR/package/libs/gettext-full"
+    local gettext_mk="$gettext_path/Makefile"
+    local patch_dest_dir="$gettext_path/patches"
+
+    if [ ! -f "$gettext_mk" ]; then
+        echo "Warning: gettext-full Makefile not found at $gettext_mk. Skipping patch." >&2
+        return
+    fi
+
+    local pkg_version
+    pkg_version=$(grep -oP 'PKG_VERSION:=\s*\K[0-9.]+' "$gettext_mk")
+
+    if [ "$pkg_version" = "0.24.1" ]; then
+        echo "gettext-full version is $pkg_version, applying patch."
+        mkdir -p "$patch_dest_dir"
+        cp -f "$patch_src" "$patch_dest_dir/"
+    else
+        echo "gettext-full version is $pkg_version, no patch needed."
+    fi
+}
+
 main() {
     clone_repo
     clean_up
@@ -994,6 +1017,7 @@ main() {
     update_nss_diag
     update_menu_location
     fix_compile_coremark
+    fix_gettext_compile_error
     update_dnsmasq_conf
     add_backup_info_to_sysupgrade
     optimize_smartDNS
