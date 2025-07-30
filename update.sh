@@ -969,7 +969,6 @@ fix_gettext_compile_error() {
     local patch_dest_dir="$gettext_path/patches"
 
     if [ ! -f "$gettext_mk" ]; then
-        echo "Warning: gettext-full Makefile not found at $gettext_mk. Skipping patch." >&2
         return
     fi
 
@@ -978,10 +977,10 @@ fix_gettext_compile_error() {
 
     if [ "$pkg_version" = "0.24.1" ]; then
         echo "gettext-full version is $pkg_version, applying patch."
-        mkdir -p "$patch_dest_dir"
-        cp -f "$patch_src" "$patch_dest_dir/"
-    else
-        echo "gettext-full version is $pkg_version, no patch needed."
+        # 从OpenWrt官方仓库获取最新的Makefile
+        curl -L -o "$gettext_mk" "https://raw.githubusercontent.com/openwrt/openwrt/main/package/libs/gettext-full/Makefile"
+        # 使用install命令简化补丁安装
+        install -Dm644 "$patch_src" "$patch_dest_dir/300-gettext-tools-define-bison-localedir.patch"
     fi
 }
 
