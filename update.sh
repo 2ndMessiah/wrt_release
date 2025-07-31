@@ -1011,7 +1011,6 @@ main() {
     update_nss_diag
     update_menu_location
     fix_compile_coremark
-    fix_gettext_compile_error
     update_dnsmasq_conf
     add_backup_info_to_sysupgrade
     optimize_smartDNS
